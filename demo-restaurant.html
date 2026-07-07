@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trattoria Aurora — Demo restaurant</title>
+<meta name="description" content="Site demonstrativ pentru un restaurant — companie fictivă, realizat de George-Mădălin Dănescu." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#FBF5EC; --card:#F3E7D5; --card-2:#EFDFC8;
+    --line:#E4D3BC; --text:#3B2A1D; --muted:#8A6F57;
+    --acc:#C4552D; --acc-2:#A8431F; --acc-soft:rgba(196,85,45,.12);
+    --display:'Fraunces',serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  html,body{overflow-x:clip}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding-top:44px}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--acc);color:#fff}
+  :focus{outline:none}
+  :focus-visible{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--acc)}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;line-height:1.08}
+
+  /* bara de demonstrație */
+  .demobar{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:var(--text);color:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 16px;font-size:13px;font-weight:600}
+  .demobar a{opacity:.92;border-radius:6px}
+  .demobar a:hover{opacity:1;text-decoration:underline}
+  .demobar .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+  @media(max-width:560px){.demobar .who{display:none}}
+
+  header{position:sticky;top:44px;z-index:60;background:rgba(251,245,236,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-family:var(--display);font-weight:700;font-size:21px}
+  .brand em{color:var(--acc);font-style:normal}
+  .links{display:none;gap:26px;font-size:14.5px;font-weight:600;color:#6b543f}
+  .links a:hover{color:var(--acc)}
+  @media(min-width:760px){.links{display:flex}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:15px;padding:13px 24px;border-radius:100px;background:var(--acc);color:#fff;border:none;cursor:pointer;transition:transform .18s,background .2s,box-shadow .25s;box-shadow:0 10px 26px var(--acc-soft)}
+  .btn:hover{background:var(--acc-2);transform:translateY(-2px)}
+  .btn:active{transform:scale(.97)}
+  .btn.small{padding:10px 18px;font-size:14px}
+
+  .hero{position:relative;padding:64px 0 56px;overflow:hidden}
+  .hero::after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,var(--acc-soft),transparent 65%);top:-140px;right:-140px;pointer-events:none}
+  .hero-grid{display:grid;gap:32px;grid-template-columns:1fr;align-items:center}
+  @media(min-width:860px){.hero-grid{grid-template-columns:1.05fr .95fr}}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+  .hero h1{font-size:clamp(38px,6.6vw,62px);font-weight:700;margin-top:14px}
+  .hero p{color:var(--muted);font-size:17.5px;margin-top:16px;max-width:46ch}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;align-items:center}
+  .hero-cta .ghost{font-weight:700;color:var(--acc)}
+  .hero-art{position:relative;height:320px;border-radius:24px;background:linear-gradient(140deg,#E8B87F,#C4552D 70%);overflow:hidden;box-shadow:0 26px 60px rgba(196,85,45,.28)}
+  .hero-art::before{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:#FBF5EC;opacity:.22;top:-50px;left:-40px}
+  .hero-art::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;border:22px solid rgba(251,245,236,.3);bottom:-90px;right:-70px}
+  .hero-art .plate{position:absolute;inset:0;display:grid;place-items:center}
+  .hero-art .plate div{width:150px;height:150px;border-radius:50%;background:#FBF5EC;box-shadow:inset 0 0 0 12px #F3E7D5,0 18px 40px rgba(59,42,29,.3)}
+
+  section.block{padding:64px 0}
+  .sec-head{max-width:56ch;margin-bottom:34px}
+  .sec-head h2{font-size:clamp(28px,4.4vw,40px);font-weight:700;margin-top:10px}
+  .sec-head p{color:var(--muted);margin-top:10px;font-size:16.5px}
+
+  .menu{display:grid;gap:14px;grid-template-columns:1fr}
+  @media(min-width:760px){.menu{grid-template-columns:repeat(3,1fr)}}
+  .dish{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;transition:transform .22s,box-shadow .25s}
+  .dish:hover{transform:translateY(-4px);box-shadow:0 16px 38px rgba(59,42,29,.1)}
+  .dish .ph{height:110px;border-radius:12px;margin-bottom:16px;background:linear-gradient(135deg,var(--card),var(--acc-soft))}
+  .dish:nth-child(2) .ph{background:linear-gradient(135deg,#F0D9B8,rgba(196,85,45,.22))}
+  .dish:nth-child(3) .ph{background:linear-gradient(135deg,#E9D2C0,rgba(168,67,31,.2))}
+  .dish h3{font-size:20px}
+  .dish p{color:var(--muted);font-size:14.5px;margin-top:6px}
+  .dish .price{display:inline-block;margin-top:14px;font-weight:800;color:var(--acc);font-size:17px}
+
+  .despre{display:grid;gap:26px;grid-template-columns:1fr;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(24px,4vw,44px)}
+  @media(min-width:820px){.despre{grid-template-columns:1fr 1fr}}
+  .despre h2{font-size:clamp(26px,4vw,36px)}
+  .despre p{color:#6b543f;margin-top:12px;font-size:16px}
+  .despre .art{height:220px;border-radius:16px;background:repeating-linear-gradient(45deg,var(--card-2) 0 14px,#EAD9BF 14px 28px)}
+
+  .quote{max-width:680px;margin:0 auto;text-align:center}
+  .quote .stars{color:var(--acc);letter-spacing:4px;font-size:18px}
+  .quote blockquote{font-family:var(--display);font-size:clamp(20px,3.2vw,27px);line-height:1.45;margin-top:14px}
+  .quote figcaption{color:var(--muted);margin-top:12px;font-size:14.5px}
+
+  .gal{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+  @media(min-width:760px){.gal{grid-template-columns:repeat(4,1fr)}}
+  .gal div{height:130px;border-radius:14px}
+  .gal div:nth-child(1){background:linear-gradient(135deg,#E8B87F,#D98F52)}
+  .gal div:nth-child(2){background:linear-gradient(135deg,#F0D9B8,#E3BC8C)}
+  .gal div:nth-child(3){background:linear-gradient(135deg,#C4552D,#A8431F)}
+  .gal div:nth-child(4){background:linear-gradient(135deg,#EFDFC8,#E0C9A4)}
+  .gal div:nth-child(5){background:linear-gradient(135deg,#D98F52,#C4552D)}
+  .gal div:nth-child(6){background:linear-gradient(135deg,#E3BC8C,#D9A76B)}
+  .gal div:nth-child(7){background:linear-gradient(135deg,#A8431F,#8F3617)}
+  .gal div:nth-child(8){background:linear-gradient(135deg,#E0C9A4,#D4B586)}
+
+  .rez{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(24px,4vw,44px)}
+  .rez-grid{display:grid;gap:14px;grid-template-columns:1fr}
+  @media(min-width:720px){.rez-grid{grid-template-columns:repeat(2,1fr)}}
+  .field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px;color:#6b543f}
+  .field input,.field select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-family:var(--body);font-size:15px;color:var(--text)}
+  .field input:focus,.field select:focus{border-color:var(--acc)}
+  .rez .btn{margin-top:20px}
+  .succes{display:none;margin-top:18px;background:var(--acc-soft);border:1px solid var(--acc);color:var(--acc-2);border-radius:12px;padding:14px 16px;font-weight:600;font-size:14.5px}
+  .succes.on{display:block}
+
+  .info{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:760px){.info{grid-template-columns:repeat(3,1fr)}}
+  .icard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .icard h3{font-size:17px;font-family:var(--body);font-weight:800}
+  .icard p{color:#6b543f;font-size:14.5px;margin-top:8px;line-height:1.7}
+
+  footer{border-top:1px solid var(--line);padding:30px 0;margin-top:20px}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13.5px;color:var(--muted)}
+  .foot a{font-weight:700;color:var(--acc)}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="demobar">
+  <a href="exemple.html">← Înapoi la exemple</a>
+  <span class="tag">Site demonstrativ · companie fictivă</span>
+  <a class="who" href="index.html">Design: G.M. Dănescu</a>
+</div>
+
+<header>
+  <nav class="wrap">
+    <a class="brand" href="#top">Trattoria <em>Aurora</em></a>
+    <div class="links">
+      <a href="#meniu">Meniu</a>
+      <a href="#despre">Despre</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="btn small" href="#rezervare">Rezervați o masă</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker reveal">Bucătărie italiană · Târgoviște</span>
+        <h1 class="reveal">Paste proaspete, făcute în casă, în fiecare zi</h1>
+        <p class="reveal">De la aluatul frământat dimineața până la sosurile gătite lent, fiecare farfurie iese din bucătăria noastră așa cum ar ieși din a bunicii — doar că la două străzi de dumneavoastră.</p>
+        <div class="hero-cta reveal">
+          <a class="btn" href="#rezervare">Rezervați o masă</a>
+          <a class="ghost" href="#meniu">Răsfoiți meniul ↓</a>
+        </div>
+      </div>
+      <div class="hero-art reveal" aria-hidden="true"><div class="plate"><div></div></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="meniu">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="kicker">Preparatele casei</span>
+        <h2>Ce vă recomandăm astăzi</h2>
+        <p>O selecție scurtă din meniul complet — cel întreg vă așteaptă la masă.</p>
+      </div>
+      <div class="menu">
+        <div class="dish reveal">
+          <div class="ph"></div>
+          <h3>Tagliatelle Aurora</h3>
+          <p>Paste proaspete cu sos de vită gătit șase ore, parmezan maturat și busuioc.</p>
+          <span class="price">48 lei</span>
+        </div>
+        <div class="dish reveal">
+          <div class="ph"></div>
+          <h3>Risotto cu hribi</h3>
+          <p>Orez carnaroli, hribi rumeniți în unt, un strop de vin alb și trufe de sezon.</p>
+          <span class="price">52 lei</span>
+        </div>
+        <div class="dish reveal">
+          <div class="ph"></div>
+          <h3>Tiramisù al casei</h3>
+          <p>Rețeta clasică, cu mascarpone fin și espresso proaspăt — porție generoasă.</p>
+          <span class="price">26 lei</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="despre" style="padding-top:0">
+    <div class="wrap">
+      <div class="despre reveal">
+        <div>
+          <span class="kicker">Povestea noastră</span>
+          <h2 style="margin-top:10px">Un colț de Italie, deschis din 2015</h2>
+          <p>Am pornit cu patru mese și o singură promisiune: nimic din congelator. Zece ani mai târziu, promisiunea a rămas aceeași — doar mesele s-au înmulțit.</p>
+          <p style="margin-top:10px">Ingredientele vin de la producători locali și de la câțiva furnizori mici din Italia, iar meniul se schimbă odată cu sezonul.</p>
+        </div>
+        <div class="art" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <figure class="quote reveal">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <blockquote>„Cele mai bune paste pe care le-am mâncat în afara Italiei. Atmosfera te face să uiți că trebuie să mai și pleci."</blockquote>
+        <figcaption>— Recenzie a unui client, Google Maps</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" id="galerie" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="kicker">Galerie</span>
+        <h2>Din bucătărie și din sală</h2>
+      </div>
+      <div class="gal reveal" aria-hidden="true">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="rezervare" style="padding-top:0">
+    <div class="wrap">
+      <div class="rez reveal">
+        <div class="sec-head" style="margin-bottom:24px">
+          <span class="kicker">Rezervare</span>
+          <h2>Păstrăm o masă pentru dumneavoastră</h2>
+          <p>Completați detaliile, iar noi confirmăm telefonic în cel mai scurt timp.</p>
+        </div>
+        <div class="rez-grid">
+          <div class="field"><label for="r-nume">Nume</label><input id="r-nume" type="text" placeholder="Numele dumneavoastră" /></div>
+          <div class="field"><label for="r-tel">Telefon</label><input id="r-tel" type="tel" placeholder="07xx xxx xxx" /></div>
+          <div class="field"><label for="r-pers">Persoane</label><select id="r-pers"><option>2 persoane</option><option>3 persoane</option><option>4 persoane</option><option>5+ persoane</option></select></div>
+          <div class="field"><label for="r-data">Data și ora</label><input id="r-data" type="text" placeholder="ex.: sâmbătă, ora 19:00" /></div>
+        </div>
+        <button class="btn" id="r-trimite" type="button">Trimiteți cererea de rezervare</button>
+        <p class="succes" id="r-succes">Mulțumim! Într-un site real, cererea ar ajunge acum la restaurant, iar dumneavoastră ați primi confirmarea. (Aceasta este o demonstrație.)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contact" style="padding-top:0">
+    <div class="wrap">
+      <div class="info">
+        <div class="icard reveal"><h3>Program</h3><p>Luni – Joi: 12:00 – 22:00<br>Vineri – Sâmbătă: 12:00 – 23:30<br>Duminică: 12:00 – 21:00</p></div>
+        <div class="icard reveal"><h3>Adresă</h3><p>Str. Exemplu nr. 10<br>Târgoviște<br>Parcare gratuită în spate</p></div>
+        <div class="icard reveal"><h3>Rezervări telefonice</h3><p>0722 123 456<br>rezervari@trattoria-aurora.ro<br>(date fictive, demonstrative)</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Trattoria Aurora — companie fictivă, în scop demonstrativ</span>
+    <span>Design &amp; dezvoltare: <a href="index.html">George-Mădălin Dănescu</a></span>
+  </div>
+</footer>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll('.reveal');
+  const counters = new Map();
+  items.forEach(el=>{
+    const p = el.parentElement, i = counters.get(p) || 0;
+    el.style.transitionDelay = Math.min(i*90, 400) + 'ms';
+    counters.set(p, i+1);
+  });
+  if(!reduce && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.1});
+    items.forEach(el=>io.observe(el));
+  } else { items.forEach(el=>{ el.style.transitionDelay='0ms'; el.classList.add('in'); }); }
+
+  document.getElementById('r-trimite').addEventListener('click', ()=>{
+    document.getElementById('r-succes').classList.add('on');
+  });
+
+  window.addEventListener('keydown', e=>{ if(e.key==='Tab') document.body.classList.add('kb'); });
+</script>
+</body>
+</html>

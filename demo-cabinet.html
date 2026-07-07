@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clinica Velmed — Demo cabinet</title>
+<meta name="description" content="Site demonstrativ pentru un cabinet cu programări — companie fictivă, realizat de George-Mădălin Dănescu." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#F3F8FC; --card:#FFFFFF; --soft:#E4EEF6;
+    --line:#D3E2EE; --text:#173A56; --muted:#5E7A91;
+    --acc:#2E7DB3; --acc-2:#22689A; --acc-soft:rgba(46,125,179,.12);
+    --body:'Manrope',system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  html,body{overflow-x:clip}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding-top:44px}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--acc);color:#fff}
+  :focus{outline:none}
+  :focus-visible{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--acc)}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{letter-spacing:-.015em;line-height:1.12;font-weight:800}
+
+  .demobar{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:var(--text);color:#EAF3FA;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 16px;font-size:13px;font-weight:600}
+  .demobar a{opacity:.92;border-radius:6px}
+  .demobar a:hover{opacity:1;text-decoration:underline}
+  .demobar .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+  @media(max-width:560px){.demobar .who{display:none}}
+
+  header{position:sticky;top:44px;z-index:60;background:rgba(243,248,252,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px}
+  .brand .plus{width:30px;height:30px;border-radius:9px;background:var(--acc);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:800}
+  .links{display:none;gap:26px;font-size:14.5px;font-weight:700;color:var(--muted)}
+  .links a:hover{color:var(--acc)}
+  @media(min-width:760px){.links{display:flex}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:15px;padding:13px 24px;border-radius:12px;background:var(--acc);color:#fff;border:none;cursor:pointer;transition:transform .18s,background .2s,box-shadow .25s;box-shadow:0 10px 26px var(--acc-soft)}
+  .btn:hover{background:var(--acc-2);transform:translateY(-2px)}
+  .btn:active{transform:scale(.97)}
+  .btn.small{padding:10px 16px;font-size:13.5px;border-radius:10px}
+  .btn.line{background:transparent;color:var(--acc);border:1.5px solid var(--acc);box-shadow:none}
+  .btn.line:hover{background:var(--acc);color:#fff}
+
+  .hero{position:relative;padding:60px 0 54px;overflow:hidden}
+  .hero::after{content:"";position:absolute;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,var(--acc-soft),transparent 65%);top:-160px;right:-160px;pointer-events:none}
+  .hero-grid{display:grid;gap:30px;grid-template-columns:1fr;align-items:center}
+  @media(min-width:880px){.hero-grid{grid-template-columns:1.05fr .95fr}}
+  .kicker{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);background:var(--acc-soft);border-radius:100px;padding:6px 14px}
+  .hero h1{font-size:clamp(34px,6vw,54px);margin-top:16px;max-width:18ch}
+  .hero p{color:var(--muted);font-size:17px;margin-top:14px;max-width:50ch}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+  .hero-pts{display:flex;flex-wrap:wrap;gap:16px;margin-top:22px;font-size:14px;font-weight:700;color:var(--muted)}
+  .hero-pts span::before{content:"✓ ";color:var(--acc);font-weight:800}
+  .hero-art{position:relative;height:300px;border-radius:22px;background:linear-gradient(150deg,#DCEBF6,#BFDCEE);overflow:hidden;box-shadow:0 24px 56px rgba(23,58,86,.16)}
+  .hero-art .cross{position:absolute;top:26px;left:26px;width:56px;height:56px;border-radius:14px;background:var(--acc);display:grid;place-items:center;color:#fff;font-size:30px;font-weight:800}
+  .hero-art .card1,.hero-art .card2{position:absolute;background:#fff;border-radius:14px;box-shadow:0 14px 34px rgba(23,58,86,.14);padding:14px 16px;font-size:13px;font-weight:700}
+  .hero-art .card1{right:22px;top:56px;width:190px}
+  .hero-art .card1 b{display:block;font-size:15px;margin-bottom:3px}
+  .hero-art .card1 i{font-style:normal;color:var(--acc)}
+  .hero-art .card2{left:26px;bottom:26px;width:210px;color:var(--muted)}
+  .hero-art .card2 b{display:block;color:var(--text);font-size:14.5px;margin-bottom:3px}
+
+  section.block{padding:62px 0}
+  .sec-head{max-width:58ch;margin-bottom:30px}
+  .sec-head h2{font-size:clamp(26px,4.2vw,38px);margin-top:12px}
+  .sec-head p{color:var(--muted);margin-top:10px;font-size:16px}
+
+  .srv-list{display:grid;gap:12px}
+  .srow{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;transition:transform .2s,box-shadow .25s}
+  .srow:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(23,58,86,.08)}
+  .srow .dot{width:42px;height:42px;border-radius:12px;background:var(--acc-soft);color:var(--acc);display:grid;place-items:center;font-weight:800;flex-shrink:0}
+  .srow .mid{flex:1;min-width:0}
+  .srow h3{font-size:16.5px}
+  .srow .meta{color:var(--muted);font-size:13.5px;font-weight:600;margin-top:2px}
+  .srow .price{font-weight:800;color:var(--acc);white-space:nowrap}
+  @media(max-width:620px){.srow{flex-wrap:wrap}.srow .btn{width:100%}}
+
+  .why{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:760px){.why{grid-template-columns:repeat(3,1fr)}}
+  .wcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .wcard .ic{width:44px;height:44px;border-radius:12px;background:var(--acc-soft);color:var(--acc);display:grid;place-items:center;font-size:20px;font-weight:800;margin-bottom:14px}
+  .wcard h3{font-size:17px}
+  .wcard p{color:var(--muted);font-size:14.5px;margin-top:7px;line-height:1.7}
+
+  .quote{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,3.5vw,34px);display:flex;gap:16px;align-items:flex-start;max-width:760px;margin:0 auto}
+  .quote .ava{width:46px;height:46px;border-radius:50%;background:var(--acc);flex-shrink:0;display:grid;place-items:center;color:#fff;font-weight:800}
+  .quote p{font-size:16.5px;line-height:1.65}
+  .quote .cine{color:var(--muted);font-size:13.5px;font-weight:700;margin-top:8px}
+
+  .prog{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:clamp(24px,4vw,42px)}
+  .prog-grid{display:grid;gap:14px;grid-template-columns:1fr}
+  @media(min-width:720px){.prog-grid{grid-template-columns:repeat(2,1fr)}}
+  .field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px;color:var(--muted)}
+  .field input,.field select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-family:var(--body);font-size:15px;color:var(--text)}
+  .field input:focus,.field select:focus{border-color:var(--acc)}
+  .prog .btn{margin-top:20px}
+  .succes{display:none;margin-top:18px;background:var(--acc-soft);border:1px solid var(--acc);color:var(--acc-2);border-radius:12px;padding:14px 16px;font-weight:700;font-size:14.5px}
+  .succes.on{display:block}
+
+  .info{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:760px){.info{grid-template-columns:repeat(3,1fr)}}
+  .icard{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .icard h3{font-size:16px}
+  .icard p{color:var(--muted);font-size:14.5px;margin-top:8px;line-height:1.75}
+
+  footer{border-top:1px solid var(--line);padding:28px 0;margin-top:18px}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13.5px;color:var(--muted)}
+  .foot a{font-weight:800;color:var(--acc)}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="demobar">
+  <a href="exemple.html">← Înapoi la exemple</a>
+  <span class="tag">Site demonstrativ · companie fictivă</span>
+  <a class="who" href="index.html">Design: G.M. Dănescu</a>
+</div>
+
+<header>
+  <nav class="wrap">
+    <a class="brand" href="#top"><span class="plus">+</span>Clinica Velmed</a>
+    <div class="links">
+      <a href="#servicii">Servicii</a>
+      <a href="#dece">De ce noi</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="btn small" href="#programare">Programați-vă</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker reveal">Cabinet stomatologic · Târgoviște</span>
+        <h1 class="reveal">Îngrijire atentă, explicată pe înțelesul dumneavoastră</h1>
+        <p class="reveal">La Velmed, fiecare consult începe cu o discuție calmă: ce vă supără, ce opțiuni există și cât costă fiecare — înainte să începem orice tratament.</p>
+        <div class="hero-cta reveal">
+          <a class="btn" href="#programare">Programați un consult</a>
+          <a class="btn line" href="#servicii">Vedeți serviciile</a>
+        </div>
+        <div class="hero-pts reveal">
+          <span>Fără timpi de așteptare</span>
+          <span>Plan de tratament în scris</span>
+        </div>
+      </div>
+      <div class="hero-art reveal" aria-hidden="true">
+        <span class="cross">+</span>
+        <div class="card1"><b>Consult inițial</b>Următorul loc liber: <i>mâine, 10:30</i></div>
+        <div class="card2"><b>Amintire programare</b>Vă trimitem un SMS cu o zi înainte.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="servicii" style="padding-top:36px">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="kicker">Servicii</span>
+        <h2>Tarife clare, fără surprize</h2>
+        <p>Prețul afișat este prețul plătit. Pentru tratamentele complexe primiți întotdeauna un plan detaliat, în scris.</p>
+      </div>
+      <div class="srv-list">
+        <div class="srow reveal">
+          <span class="dot">01</span>
+          <div class="mid"><h3>Consult + plan de tratament</h3><div class="meta">30 min · include radiografie digitală</div></div>
+          <span class="price">150 lei</span>
+          <a class="btn small" href="#programare">Programați</a>
+        </div>
+        <div class="srow reveal">
+          <span class="dot">02</span>
+          <div class="mid"><h3>Igienizare profesională</h3><div class="meta">45 min · detartraj, periaj, air-flow</div></div>
+          <span class="price">250 lei</span>
+          <a class="btn small" href="#programare">Programați</a>
+        </div>
+        <div class="srow reveal">
+          <span class="dot">03</span>
+          <div class="mid"><h3>Albire dentară</h3><div class="meta">60 min · rezultat vizibil de la prima ședință</div></div>
+          <span class="price">600 lei</span>
+          <a class="btn small" href="#programare">Programați</a>
+        </div>
+        <div class="srow reveal">
+          <span class="dot">04</span>
+          <div class="mid"><h3>Consult ortodontic copii</h3><div class="meta">40 min · evaluare și recomandări</div></div>
+          <span class="price">200 lei</span>
+          <a class="btn small" href="#programare">Programați</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="dece" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="kicker">De ce Velmed</span>
+        <h2>Trei lucruri la care ținem</h2>
+      </div>
+      <div class="why">
+        <div class="wcard reveal"><span class="ic">✓</span><h3>Explicații, nu grabă</h3><p>Nu începem niciun tratament înainte să înțelegeți exact ce urmează și de ce.</p></div>
+        <div class="wcard reveal"><span class="ic">✓</span><h3>Aparatură modernă</h3><p>Radiografie digitală cu doze reduse și instrumente sterilizate după fiecare pacient.</p></div>
+        <div class="wcard reveal"><span class="ic">✓</span><h3>Program flexibil</h3><p>Consultăm și sâmbăta dimineața, pentru cei care nu pot ajunge în timpul săptămânii.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="quote reveal">
+        <span class="ava">A.</span>
+        <div>
+          <p>„Mi-au explicat fiecare pas înainte să-l facă și am primit planul cu toate costurile din prima zi. Prima dată când nu mă tem de dentist."</p>
+          <div class="cine">— Recenzie a unui pacient, Google Maps</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="programare" style="padding-top:0">
+    <div class="wrap">
+      <div class="prog reveal">
+        <div class="sec-head" style="margin-bottom:22px">
+          <span class="kicker">Programare</span>
+          <h2>Alegeți un serviciu, vă contactăm noi</h2>
+          <p>Completați formularul, iar recepția vă sună pentru a stabili ora exactă.</p>
+        </div>
+        <div class="prog-grid">
+          <div class="field"><label for="p-nume">Nume</label><input id="p-nume" type="text" placeholder="Numele dumneavoastră" /></div>
+          <div class="field"><label for="p-tel">Telefon</label><input id="p-tel" type="tel" placeholder="07xx xxx xxx" /></div>
+          <div class="field"><label for="p-srv">Serviciul dorit</label><select id="p-srv"><option>Consult + plan de tratament</option><option>Igienizare profesională</option><option>Albire dentară</option><option>Consult ortodontic copii</option></select></div>
+          <div class="field"><label for="p-cand">Când v-ar conveni</label><input id="p-cand" type="text" placeholder="ex.: după ora 17:00, în timpul săptămânii" /></div>
+        </div>
+        <button class="btn" id="p-trimite" type="button">Trimiteți cererea de programare</button>
+        <p class="succes" id="p-succes">Mulțumim! Într-un site real, cererea ar ajunge acum la recepție, iar dumneavoastră ați fi sunat pentru confirmare. (Aceasta este o demonstrație.)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contact" style="padding-top:0">
+    <div class="wrap">
+      <div class="info">
+        <div class="icard reveal"><h3>Program</h3><p>Luni – Vineri: 09:00 – 19:00<br>Sâmbătă: 09:00 – 13:00<br>Duminică: închis</p></div>
+        <div class="icard reveal"><h3>Adresă</h3><p>Str. Exemplu nr. 12<br>Târgoviște<br>Acces persoane cu dizabilități</p></div>
+        <div class="icard reveal"><h3>Contact</h3><p>0722 123 456<br>programari@clinica-velmed.ro<br>(date fictive, demonstrative)</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Clinica Velmed — companie fictivă, în scop demonstrativ</span>
+    <span>Design &amp; dezvoltare: <a href="index.html">George-Mădălin Dănescu</a></span>
+  </div>
+</footer>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll('.reveal');
+  const counters = new Map();
+  items.forEach(el=>{
+    const p = el.parentElement, i = counters.get(p) || 0;
+    el.style.transitionDelay = Math.min(i*90, 400) + 'ms';
+    counters.set(p, i+1);
+  });
+  if(!reduce && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.1});
+    items.forEach(el=>io.observe(el));
+  } else { items.forEach(el=>{ el.style.transitionDelay='0ms'; el.classList.add('in'); }); }
+
+  document.getElementById('p-trimite').addEventListener('click', ()=>{
+    document.getElementById('p-succes').classList.add('on');
+  });
+
+  window.addEventListener('keydown', e=>{ if(e.key==='Tab') document.body.classList.add('kb'); });
+</script>
+</body>
+</html>
